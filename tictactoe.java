@@ -25,6 +25,50 @@ public class tictactoe {
         return false;
     }
 
+    static String[][] AI_GO(String[][] table) {
+        Random AI = new Random();
+        int a;
+        int sub;
+        int num;
+        int[]b = {1,3,5};
+        int[]corner = {1,3,7,9};
+        for (int i=0; i<4; i++) {
+            num = corner[i];
+            if (num>=1 && num<=3) {
+
+                a=1; sub=0;
+            }
+            else if (num>=4 && num<=6) {
+                a=3; sub=1;
+            }
+            else {
+                a=5; sub=2;
+            }
+            if (table[a][b[num-a-sub]] == " ") {
+                table[a][b[num-a-sub]]="O";
+                return table;
+            }
+        }
+        while (true) {
+            num = AI.nextInt(8)+1;
+            if (num>=1 && num<=3) {
+
+                a=1; sub=0;
+            }
+            else if (num>=4 && num<=6) {
+                a=3; sub=1;
+            }
+            else {
+                a=5; sub=2;
+            }
+            if (table[a][b[num-a-sub]] == " ") {
+                table[a][b[num-a-sub]]="O";
+                return table;
+            }
+        }
+    }
+
+
     static String[][] AI_DEFENSE(String[][] table) {
         int a; 
         int sub;
@@ -70,35 +114,11 @@ public class tictactoe {
                 }
             }
         }
+
         return AI_GO(table);
     }
 
-    static String[][] AI_GO(String[][] table) {
-        Random AI = new Random();
-        int a;
-        int sub;
-        int num;
-        int[]b = {1,3,5};
-        
-        while (true) {
-            num = AI.nextInt(8)+1;
-            if (num>=1 && num<=3) {
-
-                a=1; sub=0;
-            }
-            else if (num>=4 && num<=6) {
-                a=3; sub=1;
-            }
-            else {
-                a=5; sub=2;
-            }
-            if (table[a][b[num-a-sub]] == " ") {
-                table[a][b[num-a-sub]]="O";
-                return table;
-            }
-        }
-    }
-
+    
     public static void main(String[] args) {
         String[][] table = {{"|","-","|","-","|","-","|"},
                             {"|"," ","|"," ","|"," ","|"},
@@ -110,6 +130,7 @@ public class tictactoe {
         boolean run = true;
         System.out.println("You are X and the AI is O");
         int[] b = {1,3,5};
+        int go = 0;
         printTable(table);
         while (run) {
             Scanner input = new Scanner(System.in);
@@ -130,6 +151,7 @@ public class tictactoe {
                 };
                 if (table[a][b[num-a-sub]]==" ") {
                     table[a][b[num-a-sub]]="X";
+                    go += 1;
                     if (Win(table, "X")) {
                         printTable(table);
                         System.out.println("You win!");
@@ -137,13 +159,28 @@ public class tictactoe {
                         run = false;
                         break;
                     }
+    
                     table = AI_DEFENSE(table);
+                    go += 1;
+    
                     if (Win(table, "O")) {
                         printTable(table);
                         System.out.println("You lose :(");
                         input.close();
                         run = false;
-                        break;
+                    }
+                    if (go==8) {
+                        printTable(table);
+                        if (Win(table, "X")) {
+                            printTable(table);
+                            System.out.println("You win!");
+                            input.close();
+                            run = false;
+                            break;
+                        }
+                        System.out.println("Tie !");
+                        input.close();
+                        run = false;
                     }
                 } 
 
