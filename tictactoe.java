@@ -8,6 +8,7 @@ public class tictactoe {
             }
             System.out.println(table[i][6]);
         }
+        System.out.println("xxxxxxxxxxxxxxxxxxx");
     }
 
     static boolean Win(String[][]table, String who){
@@ -27,9 +28,9 @@ public class tictactoe {
 
     static String[][] AI_GO(String[][] table) {
         Random AI = new Random();
-        int a;
-        int sub;
-        int num;
+        int a=0;
+        int sub=0;
+        int num=0;
         int[]b = {1,3,5};
         int[]corner = {1,3,7,9};
         for (int i=0; i<4; i++) {
@@ -44,6 +45,7 @@ public class tictactoe {
             else {
                 a=5; sub=2;
             }
+
             if (table[a][b[num-a-sub]] == " ") {
                 table[a][b[num-a-sub]]="O";
                 return table;
@@ -118,7 +120,7 @@ public class tictactoe {
         return AI_GO(table);
     }
 
-    
+    /////////////////////////////////////////////////////////////////
     public static void main(String[] args) {
         String[][] table = {{"|","-","|","-","|","-","|"},
                             {"|"," ","|"," ","|"," ","|"},
